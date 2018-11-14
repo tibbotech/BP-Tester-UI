@@ -183,7 +183,7 @@ sub home_screen()
 	lcd.horline(5,315,220)
 	romfile.open("Tibbo-5x7(V).bin")
 	lcd.setfont(romfile.offset)	
-	lcd.forecolor=25544
+	lcd.forecolor=65535
 	lcd.print("Scan",30,227)
 	lcd.print("Poll",107,227)
 	lcd.print("Upload",181,227)
@@ -213,7 +213,7 @@ sub set_id_screen()
 	lcd.horline(5,315,220)
 	romfile.open("Tibbo-5x7(V).bin")
 	lcd.setfont(romfile.offset)	
-	lcd.forecolor=25544
+	lcd.forecolor=65535
 	lcd.print("Exit",30,227)
 	lcd.print("-",112,227)
 	lcd.print("+",203,227)
@@ -391,7 +391,7 @@ sub lcd_poll()
 					lcd.print("Offline",180,90+(20*position))
 				else
 					c=instr(1,sensor_data(b),"x",1)
-					lcd.print(left(sensor_data(b),c-1)+ "C " + right(sensor_data(b),len(sensor_data(b))-c) + "%",180,90+(20*position))
+					lcd.print(left(sensor_data(b),c-1)+ "0C " + right(sensor_data(b),len(sensor_data(b))-c) + "%",180,90+(20*position))
 				end if				
 			case 2:
 				clear_line(position)
@@ -644,7 +644,7 @@ sub upload_firmware_screen()
 	lcd.horline(5,315,220)
 	romfile.open("Tibbo-5x7(V).bin")
 	lcd.setfont(romfile.offset)	
-	lcd.forecolor=25544
+	lcd.forecolor=65535
 	lcd.print("Exit",30,227)
 	lcd.print("Upload",183,222)
 	lcd.print("Firmware",177,230)
@@ -688,7 +688,7 @@ sub monitor_upload_screen()
 	lcd.horline(5,315,220)
 	romfile.open("Tibbo-5x7(V).bin")
 	lcd.setfont(romfile.offset)	
-	lcd.forecolor=25544
+	lcd.forecolor=65535
 	lcd.print("Exit",30,227)
 	lcd.print("Upload",258,227)
 	lcd.forecolor=65535 
@@ -725,7 +725,7 @@ sub firmware_upload_screen()
 	lcd.horline(5,315,220)
 	romfile.open("Tibbo-5x7(V).bin")
 	lcd.setfont(romfile.offset)	
-	lcd.forecolor=25544
+	lcd.forecolor=65535
 	lcd.print("Exit",30,227)
 	lcd.print("Upload",258,227)
 	lcd.forecolor=65535 
