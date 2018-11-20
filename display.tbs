@@ -1,7 +1,7 @@
 include "display.tbh"
 
 const MAX_NUM_OF_SENSORS = 50
-const MAX_SENSOR_ID_NUM = 10
+const MAX_SENSOR_ID_NUM = 247
 const MIN_SENSOR_ID_NUM = 1
 dim sensor_no(MAX_NUM_OF_SENSORS) as byte
 dim sensor_type(MAX_NUM_OF_SENSORS) as byte
@@ -176,7 +176,7 @@ sub home_screen()
 	lcd.horline(5,315,239)
 	lcd.verline(315,40,240)
 	lcd.print("ID",10,50)
-	lcd.print("Type",70,50)
+	lcd.print("Type",65,50)
 	lcd.print("MV",180,50)
 	lcd.print("FV",255,50)
 	lcd.horline(5,315,75)
@@ -332,11 +332,11 @@ sub lcd_show_firmware()
 			lcd.print(monitor_version(b),180,90+(20*position))
 			lcd.print(firmware_version(b),255,90+(20*position))
 			select case sensor_type(b)
-			case 0:lcd.print("Unknown",70,90+(20*position))
-			case 1:lcd.print("Temp/Hum",70,90+(20*position))
-			case 2:lcd.print("Temp",70,90+(20*position))
-			case 3:lcd.print("Light",70,90+(20*position))
-			case 5:lcd.print("Shock",70,90+(20*position))
+			case 0:lcd.print("?",65,90+(20*position))
+			case 1:lcd.print("T/H",65,90+(20*position))
+			case 2:lcd.print("T",65,90+(20*position))
+			case 3:lcd.print("L",65,90+(20*position))
+			case 5:lcd.print("A",65,90+(20*position))
 			end select
 		end if
 		position=position+1
@@ -353,7 +353,7 @@ sub change_column_name()
 	lcd.forecolor=0
 	lcd.fill(180,50,124,17)
 	lcd.forecolor=65535
-	lcd.print("Data",180,50)
+	lcd.print("Data",130,50)
 	lcd.unlock
 end sub
 
@@ -379,44 +379,44 @@ sub lcd_poll()
 	for b=start_index to start_index+5
 		if sensor_no(b)<>0 then
 			lcd.print(str(sensor_no(b)),10,90+(20*position))
-			lcd.print(str(sensor_data(b)),180,90+(20*position))
+			lcd.print(str(sensor_data(b)),130,90+(20*position))
 			select case sensor_type(b)
 			case 0:
 				clear_line(position)
-				lcd.print("Unknown",70,90+(20*position))
-				lcd.print("Unknown",180,90+(20*position))
+				lcd.print("?",70,90+(20*position))
+				lcd.print("?",130,90+(20*position))
 			case 1:
 				clear_line(position)
-				lcd.print("Temp/Hum",70,90+(20*position))
+				lcd.print("T/H",65,90+(20*position))
 				if sensor_data(b)="" then
-					lcd.print("Offline",180,90+(20*position))
+					lcd.print("XXX",130,90+(20*position))
 				else
 					c=instr(1,sensor_data(b),"x",1)
-					lcd.print(left(sensor_data(b),c-1)+ "0C " + right(sensor_data(b),len(sensor_data(b))-c) + "%",180,90+(20*position))
+					lcd.print(left(sensor_data(b),c-1)+ "0C " + right(sensor_data(b),len(sensor_data(b))-c) + "%",130,90+(20*position))
 				end if				
 			case 2:
 				clear_line(position)
-				lcd.print("Temp",70,90+(20*position))
+				lcd.print("T",65,90+(20*position))
 				if sensor_data(b)="" then
-					lcd.print("Offline",180,90+(20*position))
+					lcd.print("XXX",130,90+(20*position))
 				else
-					lcd.print(sensor_data(b)+ "C",180,90+(20*position))
+					lcd.print(sensor_data(b)+ "C",130,90+(20*position))
 				end if
 			case 3:
 				clear_line(position)
-				lcd.print("Light",70,90+(20*position))
+				lcd.print("L",65,90+(20*position))
 				if sensor_data(b)="" then
-					lcd.print("Offline",180,90+(20*position))
+					lcd.print("XXX",130,90+(20*position))
 				else
-					lcd.print(sensor_data(b)+ " lx",180,90+(20*position))
+					lcd.print(sensor_data(b)+ " lx",130,90+(20*position))
 				end if
 			case 5:
 				clear_line(position)
-				lcd.print("Shock",70,90+(20*position))
+				lcd.print("A",65,90+(20*position))
 				if sensor_data(b)="" then
-					lcd.print("Offline",180,90+(20*position))
+					lcd.print("XXX",130,90+(20*position))
 				else
-					lcd.print(sensor_data(b),180,90+(20*position))
+					lcd.print(sensor_data(b),130,90+(20*position))
 				end if
 			end select
 		end if
