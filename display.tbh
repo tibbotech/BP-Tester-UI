@@ -36,3 +36,6 @@ declare sub unknown_sensor_screen()
 declare sub please_wait_screen()
 declare sub lcd_show_firmware()
 declare function scan_sensors(id as byte) as boolean
+declare function get_accelerometer_values(b as byte) as string
+declare function convert_accelerometer_values(value as string) as string
+

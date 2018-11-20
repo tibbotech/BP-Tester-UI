@@ -1,7 +1,7 @@
 include "display.tbh"
 
 const MAX_NUM_OF_SENSORS = 50
-const MAX_SENSOR_ID_NUM = 247
+const MAX_SENSOR_ID_NUM = 10
 const MIN_SENSOR_ID_NUM = 1
 dim sensor_no(MAX_NUM_OF_SENSORS) as byte
 dim sensor_type(MAX_NUM_OF_SENSORS) as byte
@@ -177,8 +177,8 @@ sub home_screen()
 	lcd.verline(315,40,240)
 	lcd.print("ID",10,50)
 	lcd.print("Type",65,50)
-	lcd.print("MV",180,50)
-	lcd.print("FV",255,50)
+	lcd.print("MV",130,50)
+	lcd.print("FV",200,50)
 	lcd.horline(5,315,75)
 	lcd.horline(5,315,220)
 	romfile.open("Tibbo-5x7(V).bin")
@@ -329,8 +329,8 @@ sub lcd_show_firmware()
 	for b=start_index to start_index+5
 		if sensor_no(b)<>0 then
 			lcd.print(str(sensor_no(b)),10,90+(20*position))
-			lcd.print(monitor_version(b),180,90+(20*position))
-			lcd.print(firmware_version(b),255,90+(20*position))
+			lcd.print(monitor_version(b),130,90+(20*position))
+			lcd.print(firmware_version(b),200,90+(20*position))
 			select case sensor_type(b)
 			case 0:lcd.print("?",65,90+(20*position))
 			case 1:lcd.print("T/H",65,90+(20*position))
@@ -416,7 +416,9 @@ sub lcd_poll()
 				if sensor_data(b)="" then
 					lcd.print("XXX",130,90+(20*position))
 				else
-					lcd.print(sensor_data(b),130,90+(20*position))
+					dim data as string
+					data=get_accelerometer_values(b)
+					lcd.print(data,130,90+(20*position))
 				end if
 			end select
 		end if
@@ -427,12 +429,48 @@ sub lcd_poll()
 	
 end sub
 
+function get_accelerometer_values(b as byte) as string
+	dim c, d, e as byte
+	dim xval,yval,zval as string
+	dim w as word
+	
+	c=instr(1,sensor_data(b),"x",1)
+	xval=left(sensor_data(b),c-1)
+	xval=convert_accelerometer_values(xval)
+	
+	d=instr(1,sensor_data(b),"x",2)
+	yval=left(sensor_data(b),d-1)
+	yval=right(yval,len(yval)-c)
+	yval=convert_accelerometer_values(yval)
+	
+	zval=right(sensor_data(b),len(sensor_data(b))-d)
+	zval=convert_accelerometer_values(zval)
+	get_accelerometer_values=xval+"/"+yval+"/"+zval+" G"
+	
+end function
+
+function convert_accelerometer_values(value as string) as string
+	
+	if left(value,1)="-" then
+		if len(value)=5 then
+			convert_accelerometer_values="-1." + mid(value,3,1)
+		else
+			convert_accelerometer_values="-0." + mid(value,2,1)
+		end if
+	else if len(value)=4 then
+		convert_accelerometer_values="1." + mid(value,2,1)
+	else
+		convert_accelerometer_values="0." + left(value,1)
+	end if	
+	
+end function
+
 'Clears a line in order to update it with new sensor data
 
 sub clear_line(position as word)
 	
 	lcd.forecolor=0
-	lcd.fill(180,90+(20*position),124,17)
+	lcd.fill(130,90+(20*position),185,17)
 	lcd.forecolor=65535
 		
 end sub

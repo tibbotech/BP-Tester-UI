@@ -77,7 +77,8 @@ on_modbus_data_arrival()
 	if(len(_packet) >= 2) {
 		_pdu_len = _packet[2] + 5; // Byte count, including slave address, crc, byte length and function code
 		if(len(_packet) >= _pdu_len) {
-			delay_ms(1);
+			word b;
+			for (b=0;b<500;b++){};
 			//char c = "&hFF" 
 			string c1 = _packet[9];
 			string c2 = _packet[10];
@@ -226,7 +227,9 @@ get_version(string rawdata){
 void
 get_sensor_data(unsigned char w,unsigned char x)
 {
+//	modbus_delay();
 	string result, rawdata;
+	dword tmp;
 	
 	switch(x){
 	case 0:
@@ -240,14 +243,25 @@ get_sensor_data(unsigned char w,unsigned char x)
 		break;
 	case 3:	//light
 		modbus_request(w, READ_INPUT_REGISTERS, READ_LIGHT_VALUE, 1, "");
-		break;	
+		break;
 	case 5:	//shock
+		//modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_X, 1, "");
 		modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_X, 1, "");
+		get_response();
+		rawdata = modbus_result();
+		
+		modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_Y, 1, "");
+		get_response();
+		rawdata = rawdata+modbus_result();
+		
+		modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_Z, 1, "");
+	 
 		break;
 	default:
 	}
+	
 	get_response();
-	rawdata = modbus_result();
+	rawdata = rawdata + modbus_result();
 	if(rawdata != "") {
 			switch(x) {
 				
@@ -318,13 +332,33 @@ get_light(string rawdata){
 
 string 
 get_shock(string rawdata){
-	string shock;
-	shock=hex_to_dec(hex(rawdata[3]),hex(rawdata[4]));
-	shock=val(shock);
-	sys.debugprint(str(shock) + "\r\n");
+
+	string shock, shockx, shocky, shockz;
+	signed int intx, inty, intz;
+	intx=hex_to_dec_in_word(hex(rawdata[3]),hex(rawdata[4]));
+	inty=hex_to_dec_in_word(hex(rawdata[10]),hex(rawdata[11]));
+	intz=hex_to_dec_in_word(hex(rawdata[17]),hex(rawdata[18]));
+	
+	shockx=intx;
+	shocky=inty;
+	shockz=intz;
+	shock=shockx+"x"+shocky+"x"+shockz;
 	return shock;
+
 }
 
+word hex_to_dec_in_word(string hi,string lo)
+{
+	string dec_val;
+	if (len(lo)==3){
+		lo="0"+right(lo,1);
+	}else{
+		lo=right(lo,2);
+	}
+	dec_val=hi+lo;
+	dec_val=val(dec_val);
+	return dec_val;	
+}
 
 //Converts hex value to decimal value
 

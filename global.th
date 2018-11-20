@@ -13,6 +13,7 @@ extern string hex_to_dec(string hi,string lo);
 extern bool modbus_finished();
 extern bool modbus_resend();
 extern bool transmit_block(byte *data, word blk, word blockcnt);
+extern word hex_to_dec_in_word(string hi,string lo);
 extern void lcd_init();
 extern void get_response();
 extern void set_sensor_id(byte id);
