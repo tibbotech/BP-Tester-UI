@@ -72,6 +72,7 @@ sub on_kp(key_event as pl_kp_event_codes, key_code as byte)
 				scan_screen=false
 				if ok_to_poll=true then
 					poll_sensors=true
+					clear_data_screen()
 					change_column_name()
 					current_page=0
 				end if
@@ -158,6 +159,14 @@ sub on_kp(key_event as pl_kp_event_codes, key_code as byte)
 			end select		
 		end if
 	end if	
+end sub
+
+sub clear_data_screen()
+	lcd.lock
+	lcd.forecolor=0
+	lcd.fill(6,80,308,135)
+	lcd.forecolor=65535	
+	lcd.unlock
 end sub
 
 'Display Home Screen
