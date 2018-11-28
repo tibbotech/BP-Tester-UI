@@ -35,7 +35,7 @@ This process should be repeated for each sensor we are connecting. For best resu
 
 ## Step 2: Setting IDs
 
-Navigate back to the home screen by pressing the **Exit** button. Then press the **Set ID** button. Use the **+** and **-** buttons to select the sensor number you wish to set. Then, press and hold the MD button on the desired sensor. The green LEDs should turn green. Then, press the **Set ID** button. If done correctly, the sensor ID will have been changed.
+Navigate back to the home screen by pressing the **Exit** button. Then press the **Set ID** button. Use the **+** and **-** buttons to select the sensor number you wish to set. Then, press and hold the MD button on the desired sensor. The green LED should turn green. Then, press the **Set ID** button. If done correctly, the sensor ID will have been changed.
 
 This process should be repeated for each sensor we are connecting. . Each sensor should be given its own **<u>UNIQUE</u>** ID between 1 and 247. Two sensors being assigned the same ID will cause erratic results.
 
