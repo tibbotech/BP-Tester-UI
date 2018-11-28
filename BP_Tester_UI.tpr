@@ -2,8 +2,8 @@
 version=1
 platform=TPP2W(G2)
 src_lib_ver=2_01_00
-name=Hexagon-Sensor-Test
-output=Hexagon-Sensor-Test.tpc
+name=BP_Tester_UI
+output=BP_Tester_UI.tpc
 debug=off
 defines= 
 transport=udp_broadcast
