@@ -242,7 +242,6 @@ get_sensor_data(unsigned char w,unsigned char x)
 		break;
 	case 1:	//temp&hum
 		modbus_request(w, READ_INPUT_REGISTERS, READ_TEMP_VALUE, 1, "");
-	
 		break;
 	case 2:	//temp&hum
 		modbus_request(w, READ_INPUT_REGISTERS, READ_TEMP_H_VALUE, 1, "");
