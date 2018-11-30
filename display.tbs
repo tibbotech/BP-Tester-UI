@@ -1,7 +1,7 @@
 include "display.tbh"
 
 const MAX_NUM_OF_SENSORS = 50
-const MAX_SENSOR_ID_NUM = 247
+const MAX_SENSOR_ID_NUM = 10
 const MIN_SENSOR_ID_NUM = 1
 dim sensor_no(MAX_NUM_OF_SENSORS) as byte
 dim sensor_type(MAX_NUM_OF_SENSORS) as byte
@@ -345,7 +345,7 @@ sub lcd_show_firmware()
 			case 1:lcd.print("T/H",65,90+(20*position))
 			case 2:lcd.print("T",65,90+(20*position))
 			case 3:lcd.print("L",65,90+(20*position))
-			case 5:lcd.print("A",65,90+(20*position))
+			case 4:lcd.print("A",65,90+(20*position))
 			end select
 		end if
 		position=position+1
@@ -394,7 +394,15 @@ sub lcd_poll()
 				clear_line(position)
 				lcd.print("?",70,90+(20*position))
 				lcd.print("?",130,90+(20*position))
-			case 1:
+			case 1:			
+				clear_line(position)
+				lcd.print("T",65,90+(20*position))
+				if sensor_data(b)="" then
+					lcd.print("XXX",130,90+(20*position))
+				else
+					lcd.print(sensor_data(b)+ "C",130,90+(20*position))
+				end if
+			case 2:			
 				clear_line(position)
 				lcd.print("T/H",65,90+(20*position))
 				if sensor_data(b)="" then
@@ -403,14 +411,6 @@ sub lcd_poll()
 					c=instr(1,sensor_data(b),"x",1)
 					lcd.print(left(sensor_data(b),c-1)+ "0C " + right(sensor_data(b),len(sensor_data(b))-c) + "%",130,90+(20*position))
 				end if				
-			case 2:
-				clear_line(position)
-				lcd.print("T",65,90+(20*position))
-				if sensor_data(b)="" then
-					lcd.print("XXX",130,90+(20*position))
-				else
-					lcd.print(sensor_data(b)+ "C",130,90+(20*position))
-				end if
 			case 3:
 				clear_line(position)
 				lcd.print("L",65,90+(20*position))
@@ -419,7 +419,7 @@ sub lcd_poll()
 				else
 					lcd.print(sensor_data(b)+ " lx",130,90+(20*position))
 				end if
-			case 5:
+			case 4:
 				clear_line(position)
 				lcd.print("A",65,90+(20*position))
 				if sensor_data(b)="" then
@@ -670,7 +670,7 @@ sub please_wait_screen()
 	lcd.rectangle(20,20,lcd.width-20,lcd.height-20)
 	lcd.print("Please Wait...",100,110)
 	sys.timercountms=0
-	while sys.timercountms<3000
+	while sys.timercountms<4000
 	wend
 	set_LED(&b00000)
 	
