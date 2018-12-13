@@ -33,6 +33,7 @@ do_xmodem_upload(string filename)
 		doevents;
 		pkt = ser.getdata(255);
 		if(pkt[0] == XMODEM_NACK || pkt[0] == 'C')
+			if (len(pkt)>0) 
 			break;
 		upload_failed_screen();
 		upload_succesful=false;
