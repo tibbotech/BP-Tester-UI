@@ -46,13 +46,16 @@ sub lcd_init()
 	io.enabled=YES
 	io.num=48
 	io.enabled=YES
-	pat.play("~G",PL_PAT_CANINT)
+	pat.play(PAT_GREEN_ON,PL_PAT_CANINT)
 	set_LED(&b00000)
 	beep.divider=21600
 	beep.play("BB",PL_BEEP_CANINT)
-	pat.play("--B-B-B--",PL_PAT_CANINT)
+	pat.play(PAT_THREE_SHORT_BOTH,PL_PAT_CANINT)
 	home_screen()
-
+	sys.timercountms=0
+	while sys.timercountms<2000
+	wend
+	pat.play(PAT_TWO_SHORT_GREEN,PL_PAT_CANINT)
 end sub
 
 'Handles Keypad Events
@@ -262,7 +265,7 @@ end sub
 
 sub on_sys_timer()
 	if poll_sensors=true then
-		pat.play("~G",PL_PAT_CANINT)
+		pat.play(PAT_GREEN_ON,PL_PAT_CANINT)
 		timer=timer+1
 		if timer>=2 then
 			set_LED(&b00000)
@@ -277,7 +280,7 @@ end sub
 'Scans for sensors
 
 sub lcd_scan()
-	pat.play("G~",PL_PAT_CANINT)
+	pat.play(PAT_GREEN_ON,PL_PAT_CANINT)
 	kp.enabled=NO
 	dim b as byte=0
 	dim percent as word
@@ -329,7 +332,7 @@ sub lcd_scan()
 	lcd.unlock
 	kp.enabled=YES
 	set_LED(&b00000)
-	pat.play("-------------G-G~",PL_PAT_CANINT)
+	pat.play(PAT_TWO_SHORT_GREEN,PL_PAT_CANINT)
 	scan_screen=true
 	
 end sub
@@ -655,8 +658,8 @@ end sub
 'Displays the upload successful screen
 
 sub upload_successful_screen()
-	
-	set_LED(&b11111)
+	pat.play(PAT_TWO_SHORT_GREEN,PL_PAT_CANINT)
+	set_LED(&b11111)	
 	clear_screen() 
 	lcd.rectangle(20,20,lcd.width-20,lcd.height-20)
 	lcd.print("Upload Successful!",80,110)
@@ -672,7 +675,7 @@ end sub
 'Displays the please wait screen
 
 sub please_wait_screen()
-
+	pat.play(PAT_GREEN_ON,PL_PAT_CANINT)
 	set_LED(&b11111)
 	clear_screen() 
 	lcd.rectangle(20,20,lcd.width-20,lcd.height-20)
@@ -864,7 +867,7 @@ end sub
 'Plays a pattern on the LED lights to show sensors are being scanned
 
 sub led_scanning_sensors()
-	pat.play("~G",PL_PAT_CANINT)
+	pat.play(PAT_GREEN_ON,PL_PAT_CANINT)
 	if sys.timercount32-pattern_timer>=1 then
 		if LED<4 then
 			LED=LED+1
@@ -893,7 +896,7 @@ end sub
 'Plays a pattern on the LED lights to show firmware is uploading
 
 sub led_firmware_uploading()
-	pat.play("~G",PL_PAT_CANINT)
+	pat.play(PAT_GREEN_ON,PL_PAT_CANINT)
 	if sys.timercount32-pattern_timer>=1 then
 		if LED<4 then
 			LED=LED+1
@@ -921,7 +924,7 @@ end sub
 'Shows upload failed screen
 
 sub upload_failed_screen()
-		
+	pat.play(PAT_LONG_RED,PL_PAT_CANINT)
 	set_LED(&b11111)
 	clear_screen()
 	lcd.rectangle(20,20,lcd.width-20,lcd.height-20)

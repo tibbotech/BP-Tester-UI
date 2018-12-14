@@ -20,7 +20,6 @@ bool upload_succesful=true;
 bool
 do_xmodem_upload(string filename)
 {
-	pat.play("G~",PL_PAT_CANINT);
 	kp.enabled=NO;
 	string data, pkt;
 	word job_size, block_num;
@@ -38,7 +37,6 @@ do_xmodem_upload(string filename)
 		upload_failed_screen();
 		upload_succesful=false;
 		kp.enabled=YES;
-		pat.play("R~",PL_PAT_CANINT);
 		return false;
 	}
 	//Carries out XModem upload. If the total number of blocks sent equal the total number of blocks, upload successful screen is displayed.
@@ -55,7 +53,6 @@ do_xmodem_upload(string filename)
 	serial_send(chr(XMODEM_EOT));
 	serial_send(chr(XMODEM_ETB));
 	if (upload_succesful)  
-		pat.play("-------------G-G~",PL_PAT_CANINT);
 		upload_successful_screen();
 	kp.enabled=YES;
 	return OK;

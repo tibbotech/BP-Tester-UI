@@ -40,3 +40,9 @@ declare function scan_sensors(id as byte) as boolean
 declare function get_accelerometer_values(b as byte) as string
 declare function convert_accelerometer_values(value as string) as string
 
+const PAT_ONE_SHORT_GREEN=			"---------------G~"
+const PAT_TWO_SHORT_GREEN=			"-------------G-G~"
+const PAT_THREE_SHORT_GREEN=		"-----------G-G-G"
+const PAT_THREE_SHORT_BOTH=			"--B-B-B--"
+const PAT_GREEN_ON=					"G~"
+const PAT_LONG_RED=					"RRRRRRRR-~"

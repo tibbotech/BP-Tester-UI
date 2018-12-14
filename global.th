@@ -34,3 +34,4 @@ extern void modbus_init();
 extern void modbus_request(byte devaddr, byte request, word start, word count, string regdata);
 extern void please_wait_screen();
 extern void modbus_first_scan();
+
