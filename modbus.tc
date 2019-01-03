@@ -309,6 +309,9 @@ get_temp_and_hum(string rawdata, unsigned char w){
 	if (len(hum)<=2){
 	hum="0"+hum;
 	};
+	if (val(temp)<5 || val(temp)>50){
+		hum = "--";
+	}
 	result=temp+"x"+hum;
 	return result;
 } 
