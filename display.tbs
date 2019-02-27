@@ -327,6 +327,10 @@ sub lcd_scan()
 		total_num_pages=(total_detected_sensors/6)+1
 	end if
 	
+	if total_num_pages=0 then
+		total_num_pages=1
+	end if
+	
 	lcd_show_firmware()
 	
 	lcd.unlock
