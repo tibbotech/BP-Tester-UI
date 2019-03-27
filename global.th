@@ -26,7 +26,7 @@ extern void update_firmware_upload_screen(word currentpack, word totalpacks);
 extern void upload_successful_screen();
 extern void upload_failed_screen();
 extern void unknown_sensor_screen();
-extern void delay_ms(unsigned int);
+extern void delay_ms(unsigned long);
 extern void serial_setup();
 extern void serial_send(string data);
 extern void on_modbus_data_arrival();

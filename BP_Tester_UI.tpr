@@ -10,7 +10,7 @@ transport=udp_broadcast
 [address1]
 platform=TPP2W(G2)
 transport=udp_broadcast
-address=0.36.119.86.75.140
+address=0.36.119.86.93.170
 [file1]
 path=main.tc
 type=c
