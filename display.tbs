@@ -48,13 +48,11 @@ sub lcd_init()
 	io.enabled=YES
 	pat.play(PAT_GREEN_ON,PL_PAT_CANINT)
 	set_LED(&b00000)
-	beep.divider=21600
+	beep.divider=0
 	beep.play("BB",PL_BEEP_CANINT)
 	pat.play(PAT_THREE_SHORT_BOTH,PL_PAT_CANINT)
 	home_screen()
-	sys.timercountms=0
-	while sys.timercountms<2000
-	wend
+	delay_ms(2000)
 	pat.play(PAT_TWO_SHORT_GREEN,PL_PAT_CANINT)
 end sub
 
@@ -667,9 +665,7 @@ sub upload_successful_screen()
 	clear_screen() 
 	lcd.rectangle(20,20,lcd.width-20,lcd.height-20)
 	lcd.print("Upload Successful!",80,110)
-	sys.timercountms=0
-	while sys.timercountms<3000
-	wend
+	delay_ms(3000)
 	set_LED(&b00000)
 	upload_firmware_screen()
 	
@@ -684,9 +680,7 @@ sub please_wait_screen()
 	clear_screen() 
 	lcd.rectangle(20,20,lcd.width-20,lcd.height-20)
 	lcd.print("Please Wait...",100,110)
-	sys.timercountms=0
-	while sys.timercountms<4000
-	wend
+	delay_ms(4000)
 	set_LED(&b00000)
 	
 end sub
@@ -703,9 +697,7 @@ sub scan_successful_screen()
 	if x>0 then
 		ok_to_poll=true
 	end if
-	sys.timercountms=0
-	while sys.timercountms<1000
-	wend
+	delay_ms(1000)
 	set_LED(&b00000)
 	home_screen()
 	
@@ -722,9 +714,7 @@ sub max_sensors_screen()
 	lcd.print("Maximum number of Probes",30,85)
 	lcd.print("detected!",115,110)
 	lcd.print("Stopping scan!",95,150)
-	sys.timercountms=0
-	while sys.timercountms<1000
-	wend
+	delay_ms(1000)
 		
 end sub
 
@@ -934,9 +924,7 @@ sub upload_failed_screen()
 	lcd.rectangle(20,20,lcd.width-20,lcd.height-20)
 	lcd.print("Upload Failed!",90,100)
 	lcd.print("Please Try Again!",75,140)
-	sys.timercountms=0
-	while sys.timercountms<3000
-	wend
+	delay_ms(3000)
 	set_LED(&b00000)
 	screen=0
 	home_screen()
@@ -951,9 +939,7 @@ sub unknown_sensor_screen()
 	clear_screen()
 	lcd.rectangle(20,20,lcd.width-20,lcd.height-20)
 	lcd.print("Unknown Sensor Detected!",40,120)
-	sys.timercountms=0
-	while sys.timercountms<1000
-	wend
+	delay_ms(1000)
 	set_LED(&b00000)
 	home_screen()
 		
@@ -994,7 +980,8 @@ end sub
 'Delays for a given number of milliseconds
 
 sub delay_ms(ms as dword)
-	sys.timercountms = 0
-	while sys.timercountms < ms
+	dim i as dword
+	i=sys.timercountms
+	while sys.timercountms-i < ms
 	wend	
 end sub

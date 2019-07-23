@@ -97,10 +97,10 @@ scan_sensors(unsigned char w)
 {
 	modbus_request(w, READ_HOLDING_REGISTERS, SCAN_SENSORS, 4, "");
 	
-	sys.timercountms=0;
+	dword i = sys.timercountms;
 	while(!modbus_finished()){
 		modbus_first_scan();
-		if (sys.timercountms>100){
+		if (sys.timercountms-i>100){
 		break;
 		}
 	}
@@ -236,23 +236,13 @@ get_sensor_data(unsigned char w,unsigned char x)
 		modbus_request(w, READ_INPUT_REGISTERS, READ_TEMP_VALUE, 1, "");
 		break;
 	case 2:	//temp&hum
-		modbus_request(w, READ_INPUT_REGISTERS, READ_TEMP_H_VALUE, 1, "");
+		modbus_request(w, READ_INPUT_REGISTERS, READ_TEMP_H_VALUE, 5, "");
 		break;
 	case 3:	//light
 		modbus_request(w, READ_INPUT_REGISTERS, READ_LIGHT_VALUE, 1, "");
 		break;
-	case 4:	//shock
-		//modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_X, 1, "");
-		modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_X, 1, "");
-		get_response();
-		rawdata = modbus_result();
-		
-		modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_Y, 1, "");
-		get_response();
-		rawdata = rawdata+modbus_result();
-		
-		modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_Z, 1, "");
-	 
+	case 4:	//shock 
+		modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_X, 5, "");
 		break;
 	default:
 	}
@@ -261,7 +251,6 @@ get_sensor_data(unsigned char w,unsigned char x)
 	rawdata = rawdata + modbus_result();
 	if(rawdata != "") {
 			switch(x) {
-				
 				case 1:
 					result=get_temp(rawdata);
 					break;
@@ -293,10 +282,7 @@ get_temp_and_hum(string rawdata, unsigned char w){
 	if (len(temp)<=2){
 	temp="0"+temp;
 	}
-	modbus_request(w, READ_INPUT_REGISTERS, READ_HUM_VALUE, 1, "");
-	get_response();
-	rawdata = modbus_result();
-	hum=hex_to_dec(hex(rawdata[3]),hex(rawdata[4]));
+	hum=hex_to_dec(hex(rawdata[11]),hex(rawdata[12]));
 	hum=left(hum,len(hum)-1)+"."+right(hum,1);
 	if (len(hum)<=2){
 	hum="0"+hum;
@@ -342,8 +328,8 @@ get_shock(string rawdata){
 	string shock, shockx, shocky, shockz;
 	signed int intx, inty, intz;
 	intx=hex_to_dec_in_word(hex(rawdata[3]),hex(rawdata[4]));
-	inty=hex_to_dec_in_word(hex(rawdata[10]),hex(rawdata[11]));
-	intz=hex_to_dec_in_word(hex(rawdata[17]),hex(rawdata[18]));
+	inty=hex_to_dec_in_word(hex(rawdata[7]),hex(rawdata[8]));
+	intz=hex_to_dec_in_word(hex(rawdata[11]),hex(rawdata[12]));
 	
 	shockx=intx;
 	shocky=inty;
@@ -384,10 +370,10 @@ hex_to_dec(string hi,string lo)
 
 //Waits 0.1 seconds for a response from sensor
 void get_response(){
-	sys.timercountms=0;
+	dword i=sys.timercountms;
 	while(!modbus_finished()){
 		on_modbus_data_arrival();
-		if (sys.timercountms>100){
+		if (sys.timercountms-i>100){
 		break;
 		}
 	}
