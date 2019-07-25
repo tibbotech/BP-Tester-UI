@@ -39,7 +39,6 @@ sub lcd_init()
 	io.state=LOW
 	kp.returnlinesmapping="36,37,38,39"
 	kp.enabled=YES
-	beep.divider=0
 	io.num=46
 	io.enabled=YES
 	io.num=47
@@ -48,7 +47,7 @@ sub lcd_init()
 	io.enabled=YES
 	pat.play(PAT_GREEN_ON,PL_PAT_CANINT)
 	set_LED(&b00000)
-	beep.divider=0
+	beep.divider=21600
 	beep.play("BB",PL_BEEP_CANINT)
 	pat.play(PAT_THREE_SHORT_BOTH,PL_PAT_CANINT)
 	home_screen()
