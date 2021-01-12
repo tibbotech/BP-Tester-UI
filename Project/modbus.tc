@@ -175,7 +175,7 @@ get_sensor_type(unsigned char w)
 	get_response();
 	result = modbus_result();
 	result=result[4];
-	if (result=="1"|| result=="2" || result=="3" || result=="4"){
+	if (result=="1"|| result=="2" || result=="3" || result=="4" || result=="5"){
 		set_sensor_type(result);
 	} else {
 		set_sensor_type(0);
@@ -244,6 +244,9 @@ get_sensor_data(unsigned char w,unsigned char x)
 	case 4:	//shock 
 		modbus_request(w, READ_INPUT_REGISTERS, READ_SHOCK_VALUE_X, 5, "");
 		break;
+	case 5:	//flood
+		modbus_request(w, READ_INPUT_REGISTERS, READ_FLOOD_VALUE, 1, "");
+		break;
 	default:
 	}
 	
@@ -262,6 +265,9 @@ get_sensor_data(unsigned char w,unsigned char x)
 					break;
 				case 4:
 					result=get_shock(rawdata);
+					break;
+				case 5:
+					result=get_flood(rawdata);
 					break;
 				default:
 		}
@@ -308,6 +314,21 @@ get_temp(string rawdata){
 	temp="0"+temp;
 	}
 	return temp;
+}
+
+//Polls flood sensor
+
+string 
+get_flood(string rawdata){
+	string flood;
+	flood=hex_to_dec(hex(rawdata[3]),hex(rawdata[4]));
+	sys.debugprint(flood + "\r\n");
+	if (flood=="0") {
+		flood="Yes";
+	} else {
+		flood="No";
+	}
+	return flood;
 }
 
 //Polls light sensor
