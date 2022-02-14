@@ -324,9 +324,9 @@ get_flood(string rawdata){
 	flood=hex_to_dec(hex(rawdata[3]),hex(rawdata[4]));
 	sys.debugprint(flood + "\r\n");
 	if (flood=="0") {
-		flood="Yes";
+		flood="Dry";
 	} else {
-		flood="No";
+		flood="Wet";
 	}
 	return flood;
 }
