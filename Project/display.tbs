@@ -354,11 +354,12 @@ sub lcd_show_firmware()
 			lcd.print(firmware_version(b),200,90+(20*position))
 			select case sensor_type(b)
 			case 0:lcd.print("?",65,90+(20*position))
-			case 1:lcd.print("T",65,90+(20*position))
-			case 2:lcd.print("T/H",65,90+(20*position))
-			case 3:lcd.print("L",65,90+(20*position))
-			case 4:lcd.print("A",65,90+(20*position))
-			end select
+			case 1:lcd.print("BP#1",65,90+(20*position))
+			case 2:lcd.print("BP#2",65,90+(20*position))
+			case 3:lcd.print("BP#3",65,90+(20*position))
+			case 4:lcd.print("BP#4",65,90+(20*position))
+			case 5:lcd.print("BP#5",65,90+(20*position))
+	end select
 		end if
 		position=position+1
 	next b
@@ -408,7 +409,7 @@ sub lcd_poll()
 				lcd.print("?",130,90+(20*position))
 			case 1:			
 				clear_line(position)
-				lcd.print("T",65,90+(20*position))
+				lcd.print("BP#1",65,90+(20*position))
 				if sensor_data(b)="" then
 					lcd.print("XXX",130,90+(20*position))
 				else
@@ -416,7 +417,7 @@ sub lcd_poll()
 				end if
 			case 2:			
 				clear_line(position)
-				lcd.print("T/H",65,90+(20*position))
+				lcd.print("BP#2",65,90+(20*position))
 				if sensor_data(b)="" then
 					lcd.print("XXX",130,90+(20*position))
 				else
@@ -425,7 +426,7 @@ sub lcd_poll()
 				end if				
 			case 3:
 				clear_line(position)
-				lcd.print("L",65,90+(20*position))
+				lcd.print("BP#3",65,90+(20*position))
 				if sensor_data(b)="" then
 					lcd.print("XXX",130,90+(20*position))
 				else
@@ -433,7 +434,7 @@ sub lcd_poll()
 				end if
 			case 4:
 				clear_line(position)
-				lcd.print("A",65,90+(20*position))
+				lcd.print("BP#4",65,90+(20*position))
 				if sensor_data(b)="" then
 					lcd.print("XXX",130,90+(20*position))
 				else
@@ -443,7 +444,7 @@ sub lcd_poll()
 				end if
 			case 5:
 				clear_line(position)
-				lcd.print("F",65,90+(20*position))
+				lcd.print("BP#5",65,90+(20*position))
 				if sensor_data(b)="" then
 					lcd.print("XXX",130,90+(20*position))
 				else
@@ -759,11 +760,11 @@ sub upload_firmware_screen()
 	lcd.printaligned("Select Upload Firmware or Upload Monitor", 15,50,295,160)
 	lcd.print("Firmware Version:", 15,120)
 	lcd.forecolor=val("&b"+strgen(lcd.greenbits/&hFF,"1")+strgen(lcd.greenbits And &hFF,"0"))
-	lcd.print("1.4", 179,120)
+	lcd.print("1.04", 179,120)
 	lcd.forecolor=65535 
 	lcd.print("Monitor Version:", 15,164)
 	lcd.forecolor=val("&b"+strgen(lcd.greenbits/&hFF,"1")+strgen(lcd.greenbits And &hFF,"0"))
-	lcd.print("1.1", 168,165)
+	lcd.print("1.01", 168,165)
 	lcd.forecolor=65535 
 	lcd.unlock
 
