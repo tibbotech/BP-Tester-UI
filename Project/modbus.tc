@@ -214,7 +214,7 @@ get_firmware_version(unsigned char w)
 string 
 get_version(string rawdata){
 	string version;
-	version=str(rawdata[3])+"."+str(rawdata[4]);
+	version=str(rawdata[3])+".0"+str(rawdata[4]);
 	return version;
 }
 
@@ -324,9 +324,9 @@ get_flood(string rawdata){
 	flood=hex_to_dec(hex(rawdata[3]),hex(rawdata[4]));
 	sys.debugprint(flood + "\r\n");
 	if (flood=="0") {
-		flood="Yes";
+		flood="Dry";
 	} else {
-		flood="No";
+		flood="Wet";
 	}
 	return flood;
 }
