@@ -214,7 +214,7 @@ get_firmware_version(unsigned char w)
 string 
 get_version(string rawdata){
 	string version;
-	version=str(rawdata[3])+"."+str(rawdata[4]);
+	version=str(rawdata[3])+".0"+str(rawdata[4]);
 	return version;
 }
 
