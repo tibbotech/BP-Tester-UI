@@ -214,7 +214,15 @@ get_firmware_version(unsigned char w)
 string 
 get_version(string rawdata){
 	string version;
-	version=str(rawdata[3])+".0"+str(rawdata[4]);
+	string dec_ver;
+	if (rawdata[4] < 10) {
+		dec_ver = "0" + str(rawdata[4]);
+	}
+	else
+	{
+		dec_ver = str(rawdata[4]);
+	}
+	version=str(rawdata[3])+"."+dec_ver;
 	return version;
 }
 
